@@ -7,6 +7,7 @@ package redesocial.telas;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JFrame;
+import redesocial.classes.Empresa;
 import redesocial.classes.Pessoa;
 import redesocial.classes.Usuario;
 import redesocial.telas.Login;
@@ -16,6 +17,11 @@ import redesocial.telas.CPessoa;
  * @author cliente
  */
 public class RedeSocial extends javax.swing.JFrame {
+    Pessoa pessoa_sessao;//facilitei na hora de puxar os dados de quem ta na sessão
+    Empresa empresa_sessao;
+    Usuario quem;
+    
+    
     Usuario admRS = new Usuario();
     /**
      * Creates new form RedeSocial
@@ -55,6 +61,11 @@ public class RedeSocial extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("JavaBook");
@@ -124,7 +135,7 @@ public class RedeSocial extends javax.swing.JFrame {
                 .addComponent(btnVoltar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 876, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
@@ -180,7 +191,7 @@ public class RedeSocial extends javax.swing.JFrame {
 
     private void btnUserListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserListActionPerformed
        Userlist u = new Userlist();
-       u.model.ListaDePessoas = (ArrayList)admRS.listaPessoa.clone();
+       u.model.ListaDePessoas = (ArrayList)admRS.getListaPessoa().clone();
        jDesktopPane1.add(u);
        u.setVisible(true);
     }//GEN-LAST:event_btnUserListActionPerformed
@@ -195,7 +206,7 @@ public class RedeSocial extends javax.swing.JFrame {
 
     private void btnListaEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaEmpresasActionPerformed
         EnterpriseList e = new EnterpriseList();
-        e.model.ListaDeEmpresas = (ArrayList)admRS.listaEmpresa.clone();
+        e.model.ListaDeEmpresas = (ArrayList)admRS.getListaEmpresa().clone();
         jDesktopPane1.add(e);
         e.setVisible(true);
     }//GEN-LAST:event_btnListaEmpresasActionPerformed
@@ -207,6 +218,19 @@ public class RedeSocial extends javax.swing.JFrame {
         jDesktopPane1.add(f);
         f.setVisible(true);
     }//GEN-LAST:event_btnFriendListActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+                if(admRS.getPessoa_sessao() != null){
+            pessoa_sessao = admRS.getPessoa_sessao();
+            System.out.printf("\n+++++++++++++++++++\nPessoa sessao agora: %s\n+++++++++++++++++++\n",pessoa_sessao.toString());
+            quem = admRS.getPessoa_sessao();
+        } else {
+            empresa_sessao = admRS.getEmpresa_sessao();
+            System.out.printf("\n+++++++++++++++++++\nEmpresa sessao agora: %s\n+++++++++++++++++++\n",empresa_sessao.toString());
+            quem.getEmpresa_sessao();
+        }
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

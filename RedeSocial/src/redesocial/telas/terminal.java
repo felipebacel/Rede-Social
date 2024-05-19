@@ -28,7 +28,6 @@ public class terminal {
         adm.adicionarPessoa("carlao", "carlao@", "carlao1234");
         adm.listar();
         System.out.println(adm.getListaPessoa());
-        adm.fazerAmizade(1, 0);
         adm.listar();
 
     }

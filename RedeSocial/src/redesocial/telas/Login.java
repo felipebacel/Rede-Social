@@ -150,14 +150,14 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     public boolean temEmPessoaEmail(String validar){
-        for (Pessoa i : admL.listaPessoa)
+        for (Pessoa i : admL.getListaPessoa())
             if (validar.equals(i.getEmail())){
                 return true;
             }
         return false;
     }
     public boolean temEmPessoaSenha(String validar){
-        for (Pessoa i : admL.listaPessoa)
+        for (Pessoa i : admL.getListaPessoa())
             if (validar.equals(validar)){
                 return true;
             }
@@ -182,7 +182,7 @@ public class Login extends javax.swing.JFrame {
     private void btnEntrarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarPActionPerformed
         if (temEmPessoaSenha(String.valueOf(txtSenha.getPassword())) || temEmPessoaEmail(txtEmail.getText()) ){ 
             RedeSocial redesocial = new RedeSocial();
-           
+            admL.setPessoa_sessao(admL.getPessoaEmail(txtEmail.getText()));
             redesocial.admRS = admL;
             redesocial.lblEmail.setText(txtEmail.getText());
             redesocial.setVisible(true);
@@ -212,6 +212,7 @@ public class Login extends javax.swing.JFrame {
     private void btnEntrarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarEActionPerformed
         if (temEmEmpresaSenha(String.valueOf(txtSenha.getPassword())) || temEmEmpresaEmail(txtEmail.getText()) ){ 
             RedeSocial redesocial = new RedeSocial();
+            admL.setEmpresa_sessao(admL.getEmpresaEmail(txtEmail.getText()));
             redesocial.admRS = admL;
             redesocial.lblEmail.setText(txtEmail.getText());
             redesocial.setVisible(true);
@@ -226,10 +227,22 @@ public class Login extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        admL.adicionarPessoa("Joselito", "Junior@gmail", "jun10r");
-        admL.adicionarEmpresa("123233", "Bar_do_ze", "zezinBar", "barze@gmail", "casshaa");
-        String[] produtos = {"cerveja", "cafe", "espetinho", "casah"};
-        admL.adicionarProduto("bar_do_ze", produtos);
+        admL.setPessoa_sessao(null);
+        admL.setEmpresa_sessao(null);
+        if (admL.getPessoaIndex("Joselito") != 1) {
+            admL.adicionarPessoa("a", "b", "c");
+            admL.adicionarPessoa("Joselito", "Junior@gmail", "jun10r");
+            admL.adicionarPessoa("Gustavo", "gustavo@gmail", "123gugu1221");
+            admL.adicionarEmpresa("123233", "Bar_do_ze", "zezinBar", "barze@gmail", "casshaa");
+            String[] produtos = {"cerveja", "cafe", "espetinho", "casah"};
+            admL.adicionarProduto("bar_do_ze", produtos);
+            admL.adicionarEmpresa("167545", "foguetes", "ElonX", "mosquetao@gmail", "verde");
+            produtos[0] = "foguete que da re";
+            produtos[1] = "satelites";
+            produtos[2] = "viagem a marte";
+            produtos[3] = "verificado do X";
+            admL.adicionarProduto("ElonX", produtos);
+        }
         admL.listar();
     }//GEN-LAST:event_formWindowOpened
 
